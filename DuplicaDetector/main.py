@@ -1,6 +1,5 @@
 from PIL import Image
 import pandas as pd
-import _pickle as pickle
 from datetime import datetime
 from random import randint
 
@@ -12,7 +11,11 @@ class ImageChecker:
         self.__r_mean = 0
         self.__g_mean = 0
         self.__b_mean = 0
-        self.__db = pd.read_pickle("db.pkl")
+        try:
+            self.__db = pd.read_pickle("db.pkl")
+        except:
+            self.__db = pd.DataFrame(columns=['PATH','LENGHT','WIDTH'])
+            self.__db.to_pickle("db.pkl")
 
     def __SaveImage(self, size):
         name = "pictures/" + str(datetime.now()) + self.__imagename[len(self.__imagename) - 4:]
